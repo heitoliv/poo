@@ -28,5 +28,13 @@ public class Banco {
 
         c1.extrato();
         c2.extrato();
+
+        c1.sacar(150);
+        c1.transferir(100,c2);
+        c1.sacar(100);
+        c1.depositar(100);
+        c1.transferir(200,c2);
+        c1.cheque_especial(0.1);
+        c2.cheque_especial(0.2);
     }
 }
