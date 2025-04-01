@@ -7,14 +7,17 @@ public class Pessoa {
     char sexo;
 
     Pessoa(){
+        this.data_nasc = new Data();
         System.out.println("Nova pessoa cadastrada no sistema");
     }
 
-    Pessoa(String n, String c, Data i, char s){
+    Pessoa(String n, String c, int d, int m, int a, char s){
         this.nome = n;
         this.cpf = c;
-        this.data_nasc = i;
+        this.data_nasc = new Data(d,m,a);
         this.sexo = s;
+        Data dataatual = new Data(1,4,2025);
+        calculaIdade(dataatual);
         System.out.println("Nova pessoa cadastrada no sistema");
     }
 
