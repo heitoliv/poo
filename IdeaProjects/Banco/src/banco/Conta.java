@@ -47,16 +47,17 @@ public class Conta {
         }
     }
 
-    double cheque_especial(double juros){
-        if (this.saldo < 0){
-            System.out.println("O saldo antigo da conta " + this.numero + " é de " + this.saldo);
-            this.saldo = this.saldo + (this.saldo * juros);
-            System.out.println("O saldo da conta " + this.numero + " obteve juros e está atualizado para " + this.saldo);
-            return this.saldo;
-        }
-        else{
-            System.out.println("O saldo da conta " + this.numero + " está positivo, não obteve juros.");
-            return this.saldo;
-        }
+    void chequeEspecial(double juros){
+    if(this.saldo < 0){
+        this.saldo = this.saldo + (juros * this.saldo)/100;
+    }
+    }
+
+    Conta(String num, Pessoa tit, double s, double lim){
+        this.numero = num;
+        this.titular = tit;
+        this.saldo = s;
+        this.limite = lim;
+        System.out.println("Conta " + this.numero + " pertence ao titular: " + this.titular.nome);
     }
 }
