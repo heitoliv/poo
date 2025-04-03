@@ -6,27 +6,26 @@ public class Pessoa {
     Data data_nasc;
     char sexo;
 
-    Pessoa(){
-        this.data_nasc = new Data();
+    Pessoa(String nome, String cpf, Data d, char s){
         System.out.println("Nova pessoa cadastrada no sistema");
-    }
-
-    Pessoa(String n, String c, int d, int m, int a, char s){
-        this.nome = n;
-        this.cpf = c;
-        this.data_nasc = new Data(d,m,a);
+        this.nome = nome;
+        this.cpf = cpf;
+        this.data_nasc = d;
         this.sexo = s;
-        Data dataatual = new Data(1,4,2025);
-        calculaIdade(dataatual);
-        System.out.println("Nova pessoa cadastrada no sistema");
     }
 
     int calculaIdade(Data data){
-         if (data.dia < this.data_nasc.dia && data.mes < this.data_nasc.mes){
-             return ((data.ano - data_nasc.ano) - 1);
+         int diff = data.ano - this.data_nasc.ano;
+
+         if (this.data_nasc.mes < data.mes){
+             return diff;
          }
-         else{
-             return data.ano - data_nasc.ano;
+         if (this.data_nasc.mes > data.mes){
+             return  diff-1;
          }
+         if (this.data_nasc.dia <= data.dia){
+             return diff;
+         }
+         return diff-1;
     }
 }
