@@ -72,8 +72,14 @@ public class Entrada {
         turma.setProf(prof);
         turma.setAlunos(alunosTurma);
 
+
         int quantAv = lerInteiro("Digite a quantidade de avaliações na disciplina:");
-        for (int i = 0; i < quantAv; i++) {
+
+        Prova provas = new Prova();
+        ArrayList<AlunoProva> totalProva = new ArrayList<>();
+        ArrayList<Double> notasProva = new ArrayList<>();
+        AlunoProva alunoprova = new AlunoProva();
+        for (int i = 1; i <= quantAv; i++) {
             int opcao = lerInteiro("""
             Escolha uma opção:
             1) Prova
@@ -86,8 +92,18 @@ public class Entrada {
                 int anoProva = lerInteiro("Digite o ano da prova:");
                 double valorProva = lerDouble("Digite o valor máximo desta avaliação:");
                 int numQuestoes = lerInteiro("Digite o número de questões:");
-                for (Aluno alTurma : alunosTurma){
 
+                provas.setnQuestoes(numQuestoes);
+                for (Aluno alTurma : alunosTurma){
+                    double nota = 0;
+                    for (int j = 1; j <= numQuestoes; j++){
+                        alunoprova.setAluno(alTurma);
+                        nota = lerDouble("Nota de " + alTurma.getNome() + "na questão " + j);
+                        nota++;
+                        notasProva.add(nota);
+                        alunoprova.setNotas(notasProva);
+                    }
+                    totalProva.add(alunoprova);
                 }
             }
 
