@@ -1,5 +1,6 @@
 package qacademico;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -72,7 +73,7 @@ public class Entrada {
         turma.setProf(prof);
         turma.setAlunos(alunosTurma);
 
-
+        ArrayList<Avaliacao> avaliacoes = new ArrayList<>();
         int quantAv = lerInteiro("Digite a quantidade de avaliações na disciplina:");
 
         Prova provas = new Prova();
@@ -105,10 +106,16 @@ public class Entrada {
                     }
                     totalProva.add(alunoprova);
                 }
+            } else if (opcao == 2){
+                Trabalho trabalho = lerTrabalho(s, alunosTurma);
+                if (trabalho != null) {
+                    avaliacoes.add(trabalho);
+                }
             }
-
         }
 
+        turma.setAvs(avaliacoes);
+        s.getTurmas().add(turma);
     }
     /**
      * Faz a leitura de uma linha inteira
@@ -155,7 +162,7 @@ public class Entrada {
         prof.setCpf(cpf);
         for (Professor profs : listaProfs){
             if (profs.cpf.equals(prof.cpf)){
-               return prof;
+                return prof;
             }
         }
         return null;
@@ -175,5 +182,60 @@ public class Entrada {
             }
         }
         return alunosTurma;
+    }
+
+    private Trabalho lerTrabalho(Sistema s, ArrayList<Aluno> alunos) {
+        String nome = lerLinha("Informe o nome desta avaliação:");
+        int dia = lerInteiro("Digite o dia do trabalho:");
+        int mes = lerInteiro("Digite o mês do trabalho:");
+        int ano = lerInteiro("Digite o ano do trabalho:");
+        double valor = lerDouble("Digite o valor máximo desta avaliação:");
+        int maxIntegrantes = lerInteiro("Digite o número máximo de integrantes:");
+        int numGrupos = lerInteiro("Digite o número de grupos:");
+
+        Trabalho trabalho = new Trabalho();
+        trabalho.setNome(nome);
+        trabalho.setDtAplic(new Data(dia, mes, ano));
+        trabalho.setValor(valor);
+        trabalho.setnIntegrantes(maxIntegrantes);
+
+        ArrayList<GrupoTrabalho> gruposT = new ArrayList<>();
+        for (int k = 0; k <= numGrupos; k++) {
+            GrupoTrabalho grupo = lerGrupoTrabalho(s,alunos);
+            if (grupo != null) {
+                gruposT.add(grupo);
+            }
+        }
+        trabalho.setGrupo(gruposT);
+        return trabalho;
+    }
+
+
+    private GrupoTrabalho lerGrupoTrabalho(Sistema s, ArrayList<Aluno> alunos) {
+        int numAlunos = lerInteiro("Digite o número de alunos neste grupo:");
+        ArrayList<Aluno> alunosGrupo = new ArrayList<>();
+
+        for (int i = 0; i < numAlunos; i++) {
+            String mat = lerLinha("Digite a matrícula do aluno:");
+            Aluno alunoEncontrado = null;
+            for (Aluno al : alunos) {
+                if (al.getMat().equals(mat)) {
+                    alunoEncontrado = al;
+                }
+            }
+            if (alunoEncontrado != null) {
+                alunosGrupo.add(alunoEncontrado);
+            } else {
+                System.out.println("Aluno com matrícula " + mat + " não encontrado na turma!");
+            }
+        }
+        if (alunosGrupo.isEmpty()) {
+            return null;
+        }
+        double nota = lerDouble("Nota do grupo:");
+        GrupoTrabalho grupo = new GrupoTrabalho();
+        grupo.setAlunos(alunosGrupo);
+        grupo.setNota(nota);
+        return grupo;
     }
 }
