@@ -13,4 +13,7 @@ public class GrupoTrabalho {
     public void setNota(double nota) {
         this.nota = nota;
     }
+    public void setAlunos(ArrayList<Aluno> a){
+        this.alunos = a;
+    }
 }
