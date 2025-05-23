@@ -67,6 +67,10 @@ public class Sistema {
     public void listarTurmas() {
         if (this.turmas.size() > 0) {
             System.out.println("Turmas cadastradas:");
+            for(Turma tn : this.turmas){
+                System.out.println(tn.getNome());
+            }
+            System.out.println();
             for (Turma t : this.turmas) {
                 t.medias();
             }
