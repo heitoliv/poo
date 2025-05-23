@@ -63,12 +63,13 @@ public class Entrada {
         String cpf = this.lerLinha("Digite o cpf do professor: ");
         double salario = this.lerDouble("Digite o salário do professor: R$");
 
-        if (s.encontrarProf(cpf) == null) { // Garantindo que o não CPF esteja duplicado.
+        if (s.encontrarProf(cpf) == null) {
             Professor p = new Professor(nome, cpf, salario);
             s.novoProf(p);
+            System.out.println("Professor " + p.getNome() + " adicionado com sucesso!");
         }
         else {
-            System.out.println("Erro: CPF duplicado. Professor não adicionado.");
+            System.out.println("Erro: CPF já existe. Professor não adicionado.");
         }
     }
 
@@ -82,7 +83,7 @@ public class Entrada {
         if (s.encontrarAluno(matricula) == null) {
             Aluno a = new Aluno(nome, cpf, matricula);
             s.novoAluno(a);
-            System.out.println("Aluno cadastrado com sucesso!");
+            System.out.println("Aluno " +  a.getNome() + " cadastrado com sucesso!");
         } else {
             System.out.println("Erro: Matrícula duplicada. Aluno não adicionado.");
         }
@@ -208,7 +209,6 @@ public class Entrada {
                 alunosGrupo.add(alunoEncontrado);
             } else {
                 System.out.println("Aluno com matrícula " + mat + " não encontrado!");
-                i--; // Repete para o mesmo aluno
             }
         }
 
@@ -244,6 +244,7 @@ public class Entrada {
         return new AlunoProva(aluno, notas);
     }
 
+    /// /DEU ERRADO
    /* public void cadTurma(Sistema s){
         Turma turma = new Turma();
 
@@ -314,11 +315,12 @@ public class Entrada {
      * @return Uma String contendo a linha que foi lida
      */
     private String lerLinha(String msg) {
-        String linha;
-        do {
-            System.out.print(msg);
-            linha = this.input.nextLine().trim();
-        } while (linha.startsWith("#"));
+        // Imprime uma mensagem ao usuário, lê uma e retorna esta linha
+        System.out.print(msg);
+        String linha = this.input.nextLine();
+
+        // Ignora linhas começando com #, que vão indicar comentários no arquivo de entrada:
+        while (linha.charAt(0) == '#') linha = this.input.nextLine();
         return linha;
     }
 
